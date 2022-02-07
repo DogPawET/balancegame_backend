@@ -11,7 +11,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 public class Test {
-
     private final BalanceGameRepository balanceGameRepository;
 
     @PostMapping("/test")
