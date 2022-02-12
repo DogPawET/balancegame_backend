@@ -1,5 +1,10 @@
 package com.dogpaw.balancegame.controller;
 
+import java.util.UUID;
+
+import javax.validation.constraints.NotNull;
+
+import org.bson.types.ObjectId;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,18 +25,18 @@ public class HostController {
 	private final HostService hostService;
 
 	@PostMapping("/makeHost")
-	public BalanceGame makeHost(@RequestBody HostDTO.makeHost dto) {
+	public @NotNull ObjectId makeHost(@RequestBody HostDTO.makeHost dto) {
 		BalanceGame balanceGame = hostService.makeHost(dto.getName());
 
-		return balanceGame;
+		return balanceGame.getId();
 	}
 
 	@PostMapping("/makeBalanceGame")
-	public BalanceGame makeBalanceGame(@RequestBody HostDTO.makeBalanceGame dto) throws
+	public @NotNull UUID makeBalanceGame(@RequestBody HostDTO.makeBalanceGame dto) throws
 		ChangeSetPersister.NotFoundException {
 		BalanceGame balanceGame = hostService.makeBalanceGame(dto);
 
-		return balanceGame;
+		return balanceGame.getUuid();
 	}
 
 }
