@@ -36,7 +36,9 @@ public class GuestService {
         int percentage = score / balanceGameAnswers.size();
 
         Guest newGuest = dto.toEntity(score, percentage);
-        balanceGame.addGuest(newGuest);
+
+        balanceGame.getGuests().add(newGuest);
+        balanceGameRepository.save(balanceGame);
 
         return new ResponseDTO.ResultResponse(balanceGame, newGuest);
     }

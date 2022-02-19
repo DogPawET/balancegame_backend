@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,11 +40,8 @@ public class BalanceGame {
 		this.name = name;
 		this.uuid = uuid;
 		this.questions = questions;
+		this.guests = new ArrayList<>();
 		this.answers = answers;
 	}
-  
-  public void addGuest(Guest guest) {
-        this.guests.add(guest);
-    }
 
 }

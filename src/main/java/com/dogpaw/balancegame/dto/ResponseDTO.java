@@ -42,13 +42,12 @@ public class ResponseDTO {
         }
     }
 
+    @Getter
     public static class GuestResponse {
-        private ObjectId id;
         private String name;
         private Integer percentage;
 
         public GuestResponse(Guest guest) {
-            this.id = guest.getId();
             this.name = guest.getName();
             this.percentage = guest.getPercentage();
         }

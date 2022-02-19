@@ -16,10 +16,6 @@ import java.util.List;
 @Document(collection = "new_collections")
 public class Guest {
 
-    @Id
-    @NotNull
-    private ObjectId id;
-
     @NotNull
     private String name;
 
