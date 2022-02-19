@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +24,10 @@ public class HostController {
 	private final HostService hostService;
 
 	@PostMapping("/makeHost")
-	public @NotNull ObjectId makeHost(@RequestBody HostDTO.makeHost dto) {
+	public String makeHost(@RequestBody HostDTO.makeHost dto) {
 		BalanceGame balanceGame = hostService.makeHost(dto.getName());
 
-		return balanceGame.getId();
+		return balanceGame.getId().toString();
 	}
 
 	@PostMapping("/makeBalanceGame")
