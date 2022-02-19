@@ -27,6 +27,9 @@ public class BalanceGame {
 	@NotNull
 	private UUID uuid;
 
+	@NotNull
+	private Integer questionNumber;
+
 	private List<Question> questions;
 
 	private List<Byte> answers;
@@ -34,11 +37,12 @@ public class BalanceGame {
 	private List<Guest> guests;
 
 	@Builder
-	public BalanceGame(ObjectId id, String name, UUID uuid,
-		List<Question> questions, List<Byte> answers) {
+	public BalanceGame(ObjectId id, String name, UUID uuid, Integer questionNumber, List<Question> questions,
+		List<Byte> answers) {
 		this.id = id;
 		this.name = name;
 		this.uuid = uuid;
+		this.questionNumber = questionNumber;
 		this.questions = questions;
 		this.guests = new ArrayList<>();
 		this.answers = answers;
