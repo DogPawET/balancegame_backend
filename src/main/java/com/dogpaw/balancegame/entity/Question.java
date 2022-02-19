@@ -14,11 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Document(collection = "new_collections")
 public class Question {
-
-    @Id
-    @NotNull
-    private ObjectId id;
-
     @NotNull
     private String firstOption;
 
