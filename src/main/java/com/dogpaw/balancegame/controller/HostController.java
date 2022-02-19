@@ -18,19 +18,19 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/host")
+@RequestMapping("/api")
 public class HostController {
 
 	private final HostService hostService;
 
-	@PostMapping("/makeHost")
+	@PostMapping("/host")
 	public String makeHost(@RequestBody HostDTO.makeHost dto) {
 		BalanceGame balanceGame = hostService.makeHost(dto.getName());
 
 		return balanceGame.getId().toString();
 	}
 
-	@PostMapping("/makeBalanceGame")
+	@PostMapping("/balanceGame")
 	public @NotNull UUID makeBalanceGame(@RequestBody HostDTO.makeBalanceGame dto) throws
 		ChangeSetPersister.NotFoundException {
 		BalanceGame balanceGame = hostService.makeBalanceGame(dto);

@@ -10,17 +10,18 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class GuestController {
 
     private final GuestService guestService;
 
-    // 게스트 답 등록, 스코어 및 확률 반환
-    @PostMapping("/{uuid}/guest")
-    public ResponseDTO.ResultResponse saveGuest(@PathVariable UUID uuid, @RequestBody GuestDTO.Create dto) {
-        return guestService.saveGuest(uuid, dto);
+    // 게스트 답 등록 및 결과 반환
+    @PostMapping("/guest")
+    public ResponseDTO.ResultResponse saveGuest(@RequestBody GuestDTO.Create dto) {
+        return guestService.saveGuest(dto);
     }
 
-    // 리더보드 확인
+    // 리더보드 반환
     @GetMapping("/{uuid}/leader-board")
     public ResponseDTO.LeaderBoard getLeaderBoard(@PathVariable UUID uuid) {
         return guestService.getLeaderBoard(uuid);
