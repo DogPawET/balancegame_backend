@@ -19,10 +19,11 @@ public class GuestDTO {
             this.answers = answers;
         }
 
-        public Guest toEntity(Integer percentage) {
+        public Guest toEntity(Integer score, Integer percentage) {
             return Guest.builder()
                     .name(name)
                     .answers(answers)
+                    .score(score)
                     .percentage(percentage)
                     .build();
         }

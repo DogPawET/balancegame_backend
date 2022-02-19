@@ -35,4 +35,8 @@ public class BalanceGame {
         this.name = name;
         this.uuid = uuid;
     }
+
+    public void addGuest(Guest guest) {
+        this.guests.add(guest);
+    }
 }

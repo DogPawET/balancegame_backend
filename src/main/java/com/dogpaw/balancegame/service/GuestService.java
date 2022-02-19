@@ -22,7 +22,7 @@ public class GuestService {
     private final BalanceGameRepository balanceGameRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public Integer saveGuest(UUID uuid, GuestDTO.Create dto) {
+    public ResponseDTO.ResultResponse saveGuest(UUID uuid, GuestDTO.Create dto) {
         BalanceGame balanceGame = balanceGameRepository.findBalanceGameByUuid(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("balancegame with uuid : " + uuid + " is not valid"));
 
@@ -35,10 +35,10 @@ public class GuestService {
         }
         int percentage = score / balanceGameAnswers.size();
 
-        balanceGame.getGuests().add(dto.toEntity(percentage));
+        Guest newGuest = dto.toEntity(score, percentage);
+        balanceGame.addGuest(newGuest);
 
-        return percentage;
-
+        return new ResponseDTO.ResultResponse(balanceGame, newGuest);
     }
 
     @Transactional(readOnly = true)

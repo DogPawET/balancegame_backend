@@ -26,12 +26,15 @@ public class Guest {
     @NotNull
     private List<Byte> answers;
 
+    private Integer score;
+
     private Integer percentage;
 
     @Builder
-    public Guest(String name, List<Byte> answers, Integer percentage) {
+    public Guest(String name, List<Byte> answers, Integer score, Integer percentage) {
         this.name = name;
         this.answers = answers;
+        this.score = score;
         this.percentage = percentage;
     }
 }
