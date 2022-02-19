@@ -41,4 +41,9 @@ public class BalanceGame {
 		this.questions = questions;
 		this.answers = answers;
 	}
+  
+  public void addGuest(Guest guest) {
+        this.guests.add(guest);
+    }
+
 }
