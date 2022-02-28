@@ -1,5 +1,6 @@
 package com.dogpaw.balancegame.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Document(collection = "new_collections")
+@Schema(description = "게스트")
 public class Guest {
 
     @NotNull
@@ -20,8 +22,10 @@ public class Guest {
     @NotNull
     private List<Byte> answers;
 
+    @Schema(description = "점수")
     private Integer score;
 
+    @Schema(description = "정답률")
     private Integer percentage;
 
     @Builder
