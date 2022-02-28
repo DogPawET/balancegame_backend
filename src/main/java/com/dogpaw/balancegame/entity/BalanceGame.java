@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -46,6 +47,23 @@ public class BalanceGame {
 		this.questions = questions;
 		this.guests = new ArrayList<>();
 		this.answers = answers;
+	}
+
+	public void validation(List<Byte> guestAnswers) {
+		if (this.questionNumber != guestAnswers.size()) {
+			throw new IllegalArgumentException("answers must be same with question numbers.");
+		}
+	}
+
+	public int scoring(List<Byte> guestAnswers) {
+		int score = 0;
+		for (int i = 0; i < this.questionNumber; i++) {
+			if (Objects.equals(this.answers.get(i), guestAnswers.get(i))) {
+				score++;
+			}
+		}
+
+		return score;
 	}
 
 }

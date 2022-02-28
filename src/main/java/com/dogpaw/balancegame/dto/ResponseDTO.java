@@ -4,11 +4,21 @@ import com.dogpaw.balancegame.entity.BalanceGame;
 import com.dogpaw.balancegame.entity.Guest;
 import com.dogpaw.balancegame.entity.Question;
 import lombok.Getter;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
 public class ResponseDTO {
+
+    @Getter
+    public static class QuestionsResponse {
+        private String hostName;
+        private List<Question> questions;
+
+        public QuestionsResponse(BalanceGame balanceGame) {
+            this.hostName = balanceGame.getName();
+            this.questions = balanceGame.getQuestions();
+        }
+    }
 
     @Getter
     public static class ResultResponse {

@@ -15,6 +15,12 @@ public class GuestController {
 
     private final GuestService guestService;
 
+    // uuid로 호스트 문제 문자 찾아 반환
+    @GetMapping("/{uuid}/questions")
+    public ResponseDTO.QuestionsResponse getQuestions(@PathVariable UUID uuid) {
+        return guestService.getQuestions(uuid);
+    }
+
     // 게스트 답 등록 및 결과 반환
     @PostMapping("/guest")
     public ResponseDTO.ResultResponse saveGuest(@RequestBody GuestDTO.Create dto) {
