@@ -1,5 +1,7 @@
 package com.dogpaw.balancegame.service;
 
+import com.dogpaw.balancegame.dto.HostDTO.makeBalanceGame;
+import com.dogpaw.balancegame.dto.ResponseDTO;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class HostService {
     private final BalanceGameRepository balanceGameRepository;
 
     @Transactional
-    public BalanceGame makeHost(HostDTO.makeHost dto) {
+    public ResponseDTO.hostResponse makeHost(HostDTO.makeHost dto) {
         UUID uuid = UUID.randomUUID();
 
         BalanceGame balanceGame = BalanceGame.builder()
@@ -26,12 +28,13 @@ public class HostService {
             .questionNumber(dto.getQuestionNumber())
             .uuid(uuid)
             .build();
+        balanceGameRepository.save(balanceGame);
 
-        return balanceGameRepository.save(balanceGame);
+        return new ResponseDTO.hostResponse(balanceGame.getUuid());
     }
 
     @Transactional
-    public BalanceGame makeBalanceGame(HostDTO.makeBalanceGame dto) {
+    public ResponseDTO.hostResponse makeBalanceGame(makeBalanceGame dto) {
         BalanceGame balanceGame = balanceGameRepository.findBalanceGameByUuid(dto.getUuid())
             .orElseThrow(() -> new IllegalArgumentException(
                 "balanceGame with uuid : " + dto.getUuid() + "is not valid"));
@@ -46,7 +49,8 @@ public class HostService {
             .build();
 
         dataCollections.validateQuestion(dto.getQuestions().size());
-        return balanceGameRepository.save(dataCollections);
+        balanceGameRepository.save(dataCollections);
 
+        return new ResponseDTO.hostResponse(balanceGame.getUuid());
     }
 }

@@ -17,14 +17,6 @@ public class HostDTO {
         private int questionNumber;
     }
 
-    @Data
-    public static class hostResult {
-        private UUID uuid;
-
-        public hostResult(UUID uuid) {
-            this.uuid = uuid;
-        }
-    }
 
     @Data
     public static class makeBalanceGame {
