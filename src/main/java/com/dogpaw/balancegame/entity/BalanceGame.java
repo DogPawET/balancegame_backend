@@ -20,79 +20,81 @@ import java.util.UUID;
 @Schema(description = "밸런스게임")
 public class BalanceGame {
 
-	@Id
-	@NotNull
-	private ObjectId id;
+    @Id
+    @NotNull
+    private ObjectId id;
 
-	@NotNull
-	private String name;
+    @NotNull
+    private String name;
 
-	@NotNull
-	private UUID uuid;
+    @NotNull
+    private UUID uuid;
 
-	@NotNull
-	@Schema(description = "질문 개수")
-	private Integer questionNumber;
+    @NotNull
+    @Schema(description = "질문 개수")
+    private Integer questionNumber;
 
-	private List<Question> questions;
+    private List<Question> questions;
 
-	private List<Byte> answers;
+    private List<Byte> answers;
 
-	private List<Guest> guests;
+    private List<Guest> guests;
 
-	@Builder
-	private BalanceGame(ObjectId id, String name, UUID uuid, Integer questionNumber,
-		List<Question> questions,
-		List<Byte> answers) {
-		this.id = id;
-		this.name = name;
-		this.uuid = uuid;
-		this.questionNumber = questionNumber;
-		this.questions = questions;
-		this.guests = new ArrayList<>();
-		this.answers = answers;
-	}
+    @Builder
+    private BalanceGame(ObjectId id, String name, UUID uuid, Integer questionNumber,
+        List<Question> questions,
+        List<Byte> answers) {
+        this.id = id;
+        this.name = name;
+        this.uuid = uuid;
+        this.questionNumber = questionNumber;
+        this.questions = questions;
+        this.guests = new ArrayList<>();
+        this.answers = answers;
+    }
 
-	public static BalanceGame of(String name, UUID uuid, Integer questionNumber) {
-		validateQuestionNumber(questionNumber);
-		return BalanceGame.builder()
-			.name(name)
-			.uuid(uuid)
-			.questionNumber(questionNumber)
-			.build();
-	}
+    public static BalanceGame of(String name, UUID uuid, Integer questionNumber) {
+        validateQuestionNumber(questionNumber);
+        return BalanceGame.builder()
+            .name(name)
+            .uuid(uuid)
+            .questionNumber(questionNumber)
+            .build();
+    }
 
-	public static BalanceGame of(BalanceGame balanceGame, List<Question> questions, List<Byte> answers) {
-		validateQuestions(questions.size(), balanceGame.getQuestionNumber());
-		validateAnswers(questions.size(), balanceGame.getQuestionNumber());
-		return BalanceGame.builder()
-			.id(balanceGame.getId())
-			.name(balanceGame.getName())
-			.uuid(balanceGame.getUuid())
-			.questionNumber(balanceGame.getQuestionNumber())
-			.questions(questions)
-			.answers(answers)
-			.build();
-	}
+    public static BalanceGame of(BalanceGame balanceGame, List<Question> questions,
+        List<Byte> answers) {
+        validateQuestions(questions.size(), balanceGame.getQuestionNumber());
+        validateAnswers(questions.size(), balanceGame.getQuestionNumber());
+        return BalanceGame.builder()
+            .id(balanceGame.getId())
+            .name(balanceGame.getName())
+            .uuid(balanceGame.getUuid())
+            .questionNumber(balanceGame.getQuestionNumber())
+            .questions(questions)
+            .answers(answers)
+            .build();
+    }
 
-	private static void validateQuestionNumber(int questionNumber) {
-		if (questionNumber < 3 || questionNumber > 10) {
-			throw new IllegalArgumentException(
-				"질문의 개수는 3개에서 10개 사이여야 합니다.");
-		}
-	}
+    private static void validateQuestionNumber(int questionNumber) {
+        if (questionNumber < 3 || questionNumber > 10) {
+            throw new IllegalArgumentException(
+                "The number of questions should be between 3 and 10.");
+        }
+    }
 
-	private static void validateQuestions(int questionsSize, int questionNumber) {
-		if (questionNumber != questionsSize) {
-			throw new IllegalArgumentException(
-				"size of question must be same with question numbers.");
-		}
-	}
+    private static void validateQuestions(int questionsSize, int questionNumber) {
+        if (questionNumber != questionsSize) {
+            throw new IllegalArgumentException(
+                "size of question must be same with question numbers.");
+        }
+    }
 
-	private static void validateAnswers(int answerSize, int questionSize) {
-		if (answerSize != questionSize) {
-			throw new IllegalArgumentException("size of question must be same with size of answer.");
-		}
+    private static void validateAnswers(int answerSize, int questionSize) {
+        if (answerSize != questionSize) {
+            throw new IllegalArgumentException(
+                "size of question must be same with size of answer.");
+        }
 
-	}
+    }
 }
