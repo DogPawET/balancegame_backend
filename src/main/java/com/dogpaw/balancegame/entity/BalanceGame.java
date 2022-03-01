@@ -41,7 +41,7 @@ public class BalanceGame {
     private List<Guest> guests;
 
     @Builder
-    public BalanceGame(ObjectId id, String name, UUID uuid, Integer questionNumber,
+    private BalanceGame(ObjectId id, String name, UUID uuid, Integer questionNumber,
         List<Question> questions,
         List<Byte> answers) {
         this.id = id;
@@ -53,11 +53,49 @@ public class BalanceGame {
         this.answers = answers;
     }
 
-    public void validateQuestion(int questionSize) {
-        if (this.questionNumber != questionSize) {
+    public static BalanceGame of(String name, UUID uuid, Integer questionNumber) {
+        validateQuestionNumber(questionNumber);
+        return BalanceGame.builder()
+            .name(name)
+            .uuid(uuid)
+            .questionNumber(questionNumber)
+            .build();
+    }
+
+    public static BalanceGame of(BalanceGame balanceGame, List<Question> questions,
+        List<Byte> answers) {
+        validateQuestions(questions.size(), balanceGame.getQuestionNumber());
+        validateAnswers(questions.size(), balanceGame.getQuestionNumber());
+        return BalanceGame.builder()
+            .id(balanceGame.getId())
+            .name(balanceGame.getName())
+            .uuid(balanceGame.getUuid())
+            .questionNumber(balanceGame.getQuestionNumber())
+            .questions(questions)
+            .answers(answers)
+            .build();
+    }
+
+    private static void validateQuestionNumber(int questionNumber) {
+        if (questionNumber < 3 || questionNumber > 10) {
+            throw new IllegalArgumentException(
+                "The number of questions should be between 3 and 10.");
+        }
+    }
+
+    private static void validateQuestions(int questionsSize, int questionNumber) {
+        if (questionNumber != questionsSize) {
             throw new IllegalArgumentException(
                 "size of question must be same with question numbers.");
         }
     }
 
+    private static void validateAnswers(int answerSize, int questionSize) {
+        if (answerSize != questionSize) {
+            throw new IllegalArgumentException(
+                "size of question must be same with size of answer.");
+        }
+
+    }
+  
 }
