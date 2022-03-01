@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -21,21 +20,20 @@ public class GuestService {
 
     private final BalanceGameRepository balanceGameRepository;
 
+    @Transactional(readOnly = true)
+    public ResponseDTO.QuestionsResponse getQuestions(UUID uuid) {
+        BalanceGame balanceGame = balanceGameRepository.findBalanceGameByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("balancegame with uuid : " + uuid + " is not valid"));
+
+        return new ResponseDTO.QuestionsResponse(balanceGame);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO.ResultResponse saveGuest(GuestDTO.Create dto) {
         BalanceGame balanceGame = balanceGameRepository.findBalanceGameByUuid(dto.getUuid())
                 .orElseThrow(() -> new IllegalArgumentException("balancegame with uuid : " + dto.getUuid() + " is not valid"));
 
-        int score = 0;
-        List<Byte> balanceGameAnswers = balanceGame.getAnswers();
-        for (int i = 0; i < dto.getAnswers().size(); i++) {
-            if (Objects.equals(dto.getAnswers().get(i), balanceGameAnswers.get(i))) {
-                score++;
-            }
-        }
-        Double percentage = (double)score / (double)balanceGameAnswers.size() * 100;
-
-        Guest newGuest = dto.toEntity(score, percentage.intValue());
+        Guest newGuest = Guest.of(dto.getName(), dto.getAnswers(), balanceGame.getAnswers(), balanceGame.getQuestionNumber());
 
         balanceGame.getGuests().add(newGuest);
         balanceGameRepository.save(balanceGame);
