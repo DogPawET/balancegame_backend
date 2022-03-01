@@ -53,28 +53,11 @@ public class BalanceGame {
         this.answers = answers;
     }
 
-    public void validation(List<Byte> guestAnswers) {
-        if (this.questionNumber != guestAnswers.size()) {
-            throw new IllegalArgumentException("answers must be same with question numbers.");
-        }
-    }
-
     public void validateQuestion(int questionSize) {
         if (this.questionNumber != questionSize) {
             throw new IllegalArgumentException(
                 "size of question must be same with question numbers.");
         }
-    }
-
-    public int scoring(List<Byte> guestAnswers) {
-        int score = 0;
-        for (int i = 0; i < this.questionNumber; i++) {
-            if (Objects.equals(this.answers.get(i), guestAnswers.get(i))) {
-                score++;
-            }
-        }
-
-        return score;
     }
 
 }

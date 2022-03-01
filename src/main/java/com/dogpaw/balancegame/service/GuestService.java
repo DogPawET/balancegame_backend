@@ -33,11 +33,7 @@ public class GuestService {
         BalanceGame balanceGame = balanceGameRepository.findBalanceGameByUuid(dto.getUuid())
                 .orElseThrow(() -> new IllegalArgumentException("balancegame with uuid : " + dto.getUuid() + " is not valid"));
 
-        balanceGame.validation(dto.getAnswers());
-        int score = balanceGame.scoring(dto.getAnswers());
-        Double percentage = (double)score / (double)balanceGame.getQuestionNumber() * 100;
-
-        Guest newGuest = dto.toEntity(score, percentage.intValue());
+        Guest newGuest = Guest.of(dto.getName(), dto.getAnswers(), balanceGame.getAnswers(), balanceGame.getQuestionNumber());
 
         balanceGame.getGuests().add(newGuest);
         balanceGameRepository.save(balanceGame);
