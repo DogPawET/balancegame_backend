@@ -48,10 +48,4 @@ public class HostController {
         return hostService.makeBalanceGame(dto);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(
-        IllegalArgumentException exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
-    }
-
 }

@@ -4,7 +4,6 @@ import com.dogpaw.balancegame.entity.BalanceGame;
 import com.dogpaw.balancegame.entity.Guest;
 import com.dogpaw.balancegame.entity.Question;
 import java.util.UUID;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;
